@@ -277,6 +277,5 @@ if "auth_token" in st.session_state:
 
         pdf_file = HTML(string=html_filled).write_pdf()
         b64 = base64.b64encode(pdf_file).decode()
-        href = f'<a href="data:application/pdf;base64,{
-            b64}" download="prescricao_veterinario.pdf">Clique aqui para baixar o PDF</a>'
+        href = f'<a href="data:application/pdf;base64,{b64}" download="receita_{animal_name}.pdf">Clique aqui para baixar o PDF</a>'
         st.markdown(href, unsafe_allow_html=True)
