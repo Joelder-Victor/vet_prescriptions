@@ -9,13 +9,14 @@ from weasyprint import HTML
 import base64
 from register_animal import register_animal
 from time import time,sleep
-
+from datetime import datetime
 res = 404
-
-while(res != 200):
+st.session_state["res_api"] = res
+while(res != 200 and st.session_state.get("res_api")!=200):
     res = wakeup_api()
     sleep(1)
     print("Aguardando Api",res)
+st.session_state["res_api"] = res
 
 st.set_page_config(
     page_title="VetOne",  # Define o título da aba do navegador
@@ -257,26 +258,27 @@ if "auth_token" in st.session_state:
             })
             st.session_state["prescriptions"] = prescriptions
         medicines_ids = []
-        if st.button("Cadastrar Prescrição"):
-            if not prescriptions:
-                st.error("Nenhuma prescrição foi adicionada.")
-            else:
-                st.success("Prescrição cadastrada com sucesso!")
-                st.write("**Detalhes da Prescrição:**")
-                for idx, prescription in enumerate(prescriptions, start=1):
-                    st.write(
-                        f"**Via de Administração {idx}:** {prescription['administration_route']}")
-                    for med_idx, medication in enumerate(prescription['medications'], start=1):
-                        medicines_ids.append(register_medicine(
-                            medication['medication_name'], medication['quantity'], medication['dosage']))
-                        
-                        st.write(f"  - **Medicamento {med_idx}:**")
-                        st.write(f"    Nome: {medication['medication_name']}")
-                        st.write(f"    Quantidade: {medication['quantity']}")
-                        st.write(f"    Posologia: {medication['dosage']}")
-                tutor_id = st.session_state.get("tutor_id")
-                animal_id = st.session_state.get("animal_id")
-                prescription_id = register_prescription(vet["id"],tutor_id,animal_id,medicines_ids)
+
+    if st.button("Cadastrar Prescrição"):
+        if not prescriptions:
+            st.error("Nenhuma prescrição foi adicionada.")
+        else:
+            st.success("Prescrição cadastrada com sucesso!")
+            st.write("**Detalhes da Prescrição:**")
+            for idx, prescription in enumerate(prescriptions, start=1):
+                st.write(
+                    f"**Via de Administração {idx}:** {prescription['administration_route']}")
+                for med_idx, medication in enumerate(prescription['medications'], start=1):
+                    medicines_ids.append(register_medicine(
+                        medication['medication_name'], medication['quantity'], medication['dosage']))
+                    
+                    st.write(f"  - **Medicamento {med_idx}:**")
+                    st.write(f"    Nome: {medication['medication_name']}")
+                    st.write(f"    Quantidade: {medication['quantity']}")
+                    st.write(f"    Posologia: {medication['dosage']}")
+            tutor_id = st.session_state.get("tutor_id")
+            animal_id = st.session_state.get("animal_id")
+            prescription_id = register_prescription(vet["id"],tutor_id,animal_id,medicines_ids)
 
     # Geração de PDF
     if st.button("Gerar PDF"):
@@ -299,7 +301,8 @@ if "auth_token" in st.session_state:
             weight=weight,
             logo_src=logo_src or "https://via.placeholder.com/200x200.png?text=Logo",
             signature_src=signature_src or "https://via.placeholder.com/200x200.png?text=Logo",
-            prescriptions=st.session_state.get("prescriptions")
+            prescriptions=st.session_state.get("prescriptions"),
+            date = datetime.now().strftime("%d/%m/%Y")
         )
 
         pdf_file = HTML(string=html_filled).write_pdf()
