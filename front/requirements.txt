@@ -1,0 +1,8 @@
+streamlit
+pydantic
+requests
+pillow
+
+python-dotenv
+
+python-multipart

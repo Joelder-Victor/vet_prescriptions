@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+
+            @bottom-center {
+                content: element(footer);
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            width: 100%;
+            height: 200px;
+            background-color: gray;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+        }
+
+        header img {
+            width: 200px;
+            height: 200px;
+        }
+
+        .header-text {
+            text-align: right;
+            color: white;
+            max-width: calc(100% - 220px);
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background-color: gray;
+        }
+
+        .main-content {
+            padding-top: 220px;
+            /* Altura do header */
+            padding-bottom: 220px;
+            /* Altura do footer + assinatura e data */
+            padding-left: 10px;
+            padding-right: 10px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid black;
+            box-sizing: border-box;
+            margin-top: 2em;
+        }
+
+        td {
+            padding: 8px;
+            border: none;
+        }
+
+        .prescription-section {
+            margin: 20px 0;
+        }
+
+        .via-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .medication-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .medication-line hr {
+            flex-grow: 1;
+            border: none;
+            border-bottom: 1px solid black;
+            margin: 0 10px;
+        }
+
+        .posology-line {
+            margin-bottom: 15px;
+        }
+
+        /* Estilos para a assinatura e data */
+        .signature-container {
+            position: fixed;
+            bottom: 160px;
+            /* Ajuste conforme a altura do footer */
+            right: 20px;
+            text-align: center;
+        }
+
+        .signature-container img {
+            width: 200px;
+        }
+
+        .signature-container p {
+            margin: 5px 0;
+        }
+
+        .date-container {
+            position: fixed;
+            bottom: 160px;
+            /* Ajuste para ficar acima da assinatura */
+            right: 20px;
+            text-align: right;
+        }
+
+        .date-container p {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="{{ logo_src }}" alt="Logo">
+        <div class="header-text">
+            <p>Médica Veterinária {{ crmv }}</p>
+            <p>Telefone: {{ phone }}</p>
+            <p>E-mail: {{ email }}</p>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <table>
+            <tr>
+                <td>Tutor: {{ tutor }}</td>
+                <td>Endereço: {{ address }}</td>
+            </tr>
+            <tr>
+                <td>Nome do animal: {{ animal_name }}</td>
+                <td>Espécie: {{ species }}</td>
+            </tr>
+            <tr>
+                <td>Raça: {{ breed }}</td>
+                <td>Idade: {{ age }}</td>
+                <td>Sexo: {{ gender }}</td>
+                <td>Peso: ± {{ weight }}</td>
+            </tr>
+        </table>
+
+        {% for via in prescriptions %}
+        <div class="prescription-section">
+            <div class="via-title">Via {{ via.administration_route }}</div>
+            {% for med in via.medications %}
+            <div class="medication-line">
+                {{ med.medication_name }}
+                <hr>
+                {{ med.quantity }}
+            </div>
+            <div class="posology-line">{{ med.dosage}}</div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Data acima da assinatura -->
+    <!-- {% if date %}
+    <div class="date-container">
+        <p>{{ date }}</p>
+    </div>
+    {% endif %} -->
+
+    <!-- Assinatura no canto inferior direito -->
+    {% if signature_src %}
+    <div class="signature-container">
+        <p>{{ date }}</p>
+        <img src="{{ signature_src }}" alt="Assinatura">
+    </div>
+    {% endif %}
+
+    <footer>
+        <!-- <p style="text-align: center;">Endereço da Clínica Veterinária - Todos os direitos reservados</p> -->
+    </footer>
+</body>
+
+</html>
