@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
-app = FastAPI(openapi_prefix="/api/v1")
+app = FastAPI()
 origins = [
     os.getenv("ORIGINS")
 ]
@@ -27,6 +27,6 @@ app.include_router(prescriptions.router, prefix="/api/v1")
 app.include_router(veterinarian.router, prefix="/api/v1")
 app.include_router(login.router, prefix="/api/v1")
 
-@app.get("/")
+@app.get("/api/v1")
 async def root():
     return {"message": "VetOne is live!!"}
