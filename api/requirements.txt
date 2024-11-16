@@ -9,3 +9,8 @@ cairosvg
 gunicorn
 python-dotenv
 sqlalchemy
+passlib
+pyjwt
+boto3
+botocore
+psycopg2
