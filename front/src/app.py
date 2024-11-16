@@ -3,10 +3,19 @@ from auth import authenticate_user, register_user
 from register_vet import get_veterinarian_info, get_logo, get_signature
 from register_animal import register_animal, register_guardian
 from register_prescriptions import register_medicine,register_prescription
+from up_server import wakeup_api
 from jinja2 import Template
 from weasyprint import HTML
 import base64
 from register_animal import register_animal
+from time import time,sleep
+
+res = 404
+
+while(res != 200):
+    res = wakeup_api()
+    sleep(1)
+    print("Aguardando Api",res)
 
 st.set_page_config(
     page_title="VetOne",  # Define o título da aba do navegador
