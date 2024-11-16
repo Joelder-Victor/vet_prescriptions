@@ -8,3 +8,4 @@ pillow
 cairosvg
 gunicorn
 python-dotenv
+sqlalchemy
