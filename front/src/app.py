@@ -208,11 +208,9 @@ if "auth_token" in st.session_state:
 
             col_add_med, col_remove_med = st.columns([1, 1])
             with col_add_med:
-                st.button(f"Adicionar Medicamento na Via {
-                          i+1}", key=f'add_med_{i}', on_click=add_medication)
+                st.button(f"Adicionar Medicamento na Via {i+1}", key=f'add_med_{i}', on_click=add_medication)
             with col_remove_med:
-                st.button(f"Remover Medicamento da Via {
-                          i+1}", key=f'remove_med_{i}', on_click=remove_medication)
+                st.button(f"Remover Medicamento da Via {i+1}", key=f'remove_med_{i}', on_click=remove_medication)
 
             medications = []
             for j in range(st.session_state[f'med_count_{i}']):
