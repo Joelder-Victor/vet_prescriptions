@@ -8,6 +8,24 @@ from weasyprint import HTML
 import base64
 from register_animal import register_animal
 
+st.set_page_config(
+    page_title="VetOne",  # Define o título da aba do navegador
+    layout="centered",  # Layout centralizado
+    initial_sidebar_state="expanded",  # Estado inicial da sidebar
+)
+hide_streamlit_style = """
+            <style>
+            /* Oculta o menu principal (hamburger menu) */
+            #MainMenu {visibility: hidden;}
+            
+            /* Oculta o cabeçalho "Made with Streamlit" */
+            footer {visibility: hidden;}
+            
+            /* Oculta o cabeçalho superior */
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 if "animal_form_loaded" not in st.session_state:
     st.session_state["animal_form_loaded"] = False
