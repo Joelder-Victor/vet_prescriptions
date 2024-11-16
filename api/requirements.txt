@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+jinja2
+weasyprint
+pydantic
+requests
+pillow
+cairosvg
+gunicorn
