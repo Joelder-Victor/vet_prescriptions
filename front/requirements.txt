@@ -2,7 +2,8 @@ streamlit
 pydantic
 requests
 pillow
-
+jinja2
+weasyprint
 python-dotenv
-
+cairosvg
 python-multipart
