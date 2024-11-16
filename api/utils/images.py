@@ -13,6 +13,7 @@ SUPABASE_BUCKET = os.getenv("SUPABASE_BUCKET")
 PROJECT_REGION = os.getenv("PROJECT_REGION")
 ACCESS_KEY = os.getenv("SUPABASE_KEY")
 SECRET_KEY = os.getenv("SUPABASE_SECRET_KEY")
+
 # Criação do cliente S3 usando boto3
 s3_client = boto3.client(
     's3',
@@ -39,12 +40,9 @@ def download_image_from_supabase(object_key, download_path,object_key_path):
 
 def upload_image_to_supabase(file_path, object_key):
     try:
-        response = s3_client.upload_file(
-            file_path, SUPABASE_BUCKET, object_key)
-        print(f"Arquivo '{
-              file_path}' enviado com sucesso para o Supabase em {response}.")
+        response = s3_client.upload_file(file_path, SUPABASE_BUCKET, object_key)
+        print(f"Arquivo '{file_path}' enviado com sucesso para o Supabase em {response}.")
     except s3_client.exceptions.NoSuchBucket:
-        print(f"Erro: O bucket '{
-              SUPABASE_BUCKET}' não foi encontrado. Verifique se ele existe no Supabase.")
+        print(f"Erro: O bucket '{SUPABASE_BUCKET}' não foi encontrado. Verifique se ele existe no Supabase.")
     except Exception as e:
         print(f"Erro ao enviar o arquivo: {str(e)}")
